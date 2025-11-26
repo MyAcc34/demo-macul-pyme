@@ -1,0 +1,463 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+
+<title>Macul Digital — Panel de Control Pyme</title>
+<style>
+  :root{
+    /* Variables corregidas para VS Code */
+    --bg:'f5f7fb'; 
+    --card:'ffffff'; 
+    --accent:'0066cc'; 
+    --text:'1f2937';
+    --header-bg: linear-gradient(90deg, #0066cc, #004499);
+  }
+  
+  html,body{height:100%; margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text);}
+  
+  /* --- HEADER AZUL --- */
+  header{
+      background: var(--header-bg);
+      padding:12px 16px; 
+      display:flex; 
+      align-items:center; 
+      justify-content:space-between; 
+      box-shadow:0 2px 10px rgba(0,0,0,.15); 
+      position:sticky; 
+      top:0; 
+      z-index:100;
+      color: white;
+  }
+
+  .logo{display:flex; align-items:center; gap:10px}
+  .logo .mark{
+      width:36px; height:36px; 
+      background:white; color:var(--accent);
+      border-radius:6px; 
+      display:flex; align-items:center; justify-content:center; 
+      font-weight:bold;
+  }
+  .logo div { color: white !important; }
+
+  /* NAVEGACIÓN (Móvil Optimizada) */
+  nav {
+      display: flex; 
+      gap: 8px; 
+      overflow-x: auto; 
+      padding-bottom: 5px; 
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE/Edge */
+      padding-left: 4px; padding-right: 4px;
+      -webkit-overflow-scrolling: touch;
+  }
+  nav::-webkit-scrollbar { display: none; }
+
+  nav button, nav a button {
+      background: none; 
+      border: 0; 
+      padding: 10px 14px; 
+      border-radius: 20px; 
+      cursor: pointer; 
+      white-space: nowrap; 
+      font-size: 14px; 
+      color: rgba(255,255,255,0.8);
+      transition: all 0.2s;
+      border: 1px solid transparent;
+  }
+  
+  nav button:hover { background: rgba(255,255,255,0.1); color: white;}
+  nav button.active {
+      background: white; 
+      color: var(--accent); 
+      font-weight: 700;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  }
+  nav a { text-decoration: none; }
+  
+  /* CONTENIDO */
+  main{padding:16px; max-width:1100px; margin:0 auto 40px auto;}
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:12px}
+  .card{background:var(--card); padding:16px; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,.04); border:1px solid rgba(0,0,0,0.05);}
+  .small{font-size:13px; color:#6b7280; font-weight:500; text-transform:uppercase; letter-spacing:0.5px;}
+  
+  /* FORMULARIOS Y TABLAS */
+  label{display:block; font-weight:600; margin-top:12px; font-size:13px; color:#374151;}
+  input,select,textarea{width:100%; padding:10px; margin-top:6px; box-sizing:border-box; border:1px solid #d1d5db; border-radius:6px; font-size:14px;}
+  input:focus, textarea:focus{outline:none; border-color:var(--accent); ring:2px var(--accent);}
+  
+  table{width:100%; border-collapse:collapse; font-size:13px; margin-top:10px;}
+  th{text-align:left; color:#6b7280; font-weight:600; padding:8px; border-bottom:1px solid #e5e7eb;}
+  td{padding:10px 8px; border-bottom:1px solid #f3f4f6; color:#1f2937;}
+  
+  .btn{background:var(--accent); color:#fff; border:0; padding:10px 16px; border-radius:6px; cursor:pointer; font-weight:500; transition:opacity 0.2s;}
+  .btn:hover{opacity:0.9;}
+  .muted{color:#6b7280; font-size:13px; line-height:1.5;}
+  
+  .tog{display:flex; gap:8px; align-items:center}
+  .qr-container{background:white; padding:10px; border-radius:8px; display:inline-block; border:1px solid #eee;}
+  
+  /* Plantillas Estilos */
+  .template-card{
+      cursor:pointer; border:1px solid #e5e7eb; transition:all 0.2s;
+      display:flex; flex-direction:column; align-items:center; text-align:center;
+  }
+  .template-card:hover{ border-color:var(--accent); transform:translateY(-2px); box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+  .icon-doc{ width:40px; height:40px; background:#eff6ff; color:var(--accent); border-radius:50%; display:flex; align-items:center; justify-content:center; margin-bottom:10px; font-weight:bold; font-size:18px;}
+
+  @media (max-width:600px){ header{flex-direction:column; align-items:flex-start; gap:12px;} nav{width:100%;} .logo span{display:none}}
+  
+  .high-contrast{background:#000; color:#fff; --bg:'#000'; --card:'#111'; --text:'#fff'; --accent:'#3399ff'; --header-bg:'#222';}
+  .high-contrast header, .high-contrast .card{background:#111; color:#fff; border-color:#333;}
+  .high-contrast input{background:#000; color:#fff; border-color:#555;}
+  .high-contrast nav button.active{background:#333; color:#fff;}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">
+    <div class="mark" aria-hidden="true">M</div>
+    <div>
+      <div style="font-weight:700; font-size:16px;">Macul Digital</div>
+      <div style="font-size:12px;">Plataforma Pyme</div>
+    </div>
+  </div>
+  <nav aria-label="Navegación principal">
+    <button data-target="home" class="active">Inicio</button>
+    <button data-target="billing">Facturación</button>
+    <button data-target="templates">Plantillas</button>
+    
+    <a href="modulos.html" style="text-decoration:none;">
+        <button type="button">Aprende 🎓</button>
+    </a>
+
+    <button data-target="register">Mi Negocio</button>
+    <button data-target="reports">Reportes</button>
+    <a href="legislacion.html" style="text-decoration:none;"><button type="button">Legislación 🏛️</button></a>
+    <button data-target="access">Ayuda</button>
+</nav>
+</header>
+
+<main>
+  <section id="home" class="card" role="region" aria-labelledby="homeTitle">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h2 id="homeTitle" style="margin:0; font-size:18px;">Panel de Control</h2>
+      <span style="font-size:12px; background:#e0f2fe; color:#0369a1; padding:2px 8px; border-radius:12px;">Versión Demo</span>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <div class="small">Ventas de Hoy</div>
+        <div style="font-size:28px; font-weight:700; margin-top:6px; color:var(--accent);">$ <span id="todaySales">0</span></div>
+      </div>
+      <div class="card">
+        <div class="small">Boletas Emitidas</div>
+        <div style="font-size:28px; font-weight:700; margin-top:6px"><span id="invoicesCount">0</span></div>
+      </div>
+      
+      <div class="card" style="text-align:center;">
+        <div class="small" style="margin-bottom:8px">Compartir App</div>
+        <div class="qr-container">
+          <img id="dynamicQR" src="" alt="Cargando QR..." style="width:100px; height:100px; display:block;">
+        </div>
+        <div style="font-size:11px; color:#999; margin-top:6px">Escanea para abrir en celular</div>
+      </div>
+
+      <div class="card">
+        <div class="small">Acciones Rápidas</div>
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:12px">
+          <button class="btn" onclick="show('billing')">Nueva Venta</button>
+          <button class="btn" style="background:#e5e7eb; color:#374151" onclick="show('templates')">Buscar Formulario</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="billing" class="card" role="region" aria-labelledby="billTitle" hidden>
+    <h2 id="billTitle" style="margin-top:0;">Emisión de Documentos</h2>
+    
+    <div style="margin-bottom:20px; background:#eff6ff; padding:12px; border-radius:8px; border-left:4px solid var(--accent); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+      <div>
+        <strong style="color:#1e40af; font-size:14px;">¿Dudas con la Boleta Electrónica?</strong>
+        <div style="font-size:13px; color:#1e3a8a;">Aprende a emitirla paso a paso.</div>
+      </div>
+      <a href="tutorial.html" target="_blank" rel="noopener noreferrer" class="btn" style="text-decoration:none; font-size:13px; background:#2563eb;">
+        📚 Ver Tutorial
+      </a>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label>Producto o Servicio</label>
+        <input id="itemDesc" placeholder="Ej: Pan Amasado Kg" />
+        <div style="display:flex; gap:10px;">
+          <div style="flex:1"><label>Cantidad</label><input id="itemQty" type="number" min="1" value="1" /></div>
+          <div style="flex:1"><label>Precio Unit ($)</label><input id="itemPrice" type="number" min="0" value="1000" /></div>
+        </div>
+        <div style="margin-top:16px; display:flex; gap:8px">
+          <button class="btn" style="flex:1" onclick="addItem()">+ Agregar Ítem</button>
+          <button onclick="clearItems()" type="button" class="btn" style="background:#f3f4f6; color:#374151;">Limpiar</button>
+        </div>
+      </div>
+
+      <div class="card" style="background:#fafafa; border:1px dashed #ccc;">
+        <div style="font-weight:700; color:#444;">Detalle de la Boleta</div>
+        <table id="itemsTable">
+          <thead><tr><th>Item</th><th>Cant.</th><th>Total</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div style="margin-top:16px; border-top:2px solid #ddd; padding-top:10px; display:flex; justify-content:space-between; align-items:center">
+          <div style="font-size:14px;">Total a Pagar</div>
+          <div style="font-size:20px; font-weight:800; color:var(--accent);">$ <span id="total">0</span></div>
+        </div>
+        <div style="margin-top:16px;">
+          <button class="btn" style="width:100%; background:#059669;" onclick="generateInvoice()">✅ Confirmar y Generar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="templates" class="card" role="region" aria-labelledby="tplTitle" hidden>
+    <h2 id="tplTitle" style="margin-top:0;">Plantillas y Formularios</h2>
+    <p class="muted">Documentos listos para rellenar e imprimir. No requieren descarga previa.</p>
+    
+    <div class="grid" style="margin-top:20px;">
+      <div class="card template-card" onclick="loadTemplate('recibo')">
+        <div class="icon-doc">$</div>
+        <strong>Recibo de Dinero</strong>
+        <div class="small" style="margin-top:4px; font-weight:400; text-transform:none;">Para pagos en efectivo</div>
+      </div>
+      <div class="card template-card" onclick="loadTemplate('vale')">
+        <div class="icon-doc">#</div>
+        <strong>Vale de Caja</strong>
+        <div class="small" style="margin-top:4px; font-weight:400; text-transform:none;">Retiros internos / Vueltos</div>
+      </div>
+      <div class="card template-card" onclick="loadTemplate('cotizacion')">
+        <div class="icon-doc">%</div>
+        <strong>Cotización Simple</strong>
+        <div class="small" style="margin-top:4px; font-weight:400; text-transform:none;">Presupuesto para cliente</div>
+      </div>
+    </div>
+
+    <div id="template-editor" style="margin-top:24px; display:none; border-top:1px solid #eee; padding-top:20px;">
+       <h3 id="tpl-name" style="color:var(--accent);">Editando Documento</h3>
+       <div style="background:#fafafa; padding:16px; border-radius:8px; border:1px solid #ddd;">
+         <div id="tpl-inputs" class="grid"></div>
+         <div style="margin-top:20px; text-align:right;">
+           <button class="btn" onclick="printTemplate()">🖨️ Imprimir / Guardar PDF</button>
+         </div>
+       </div>
+    </div>
+  </section>
+
+  <section id="register" class="card" role="region" aria-labelledby="regTitle" hidden>
+    <h2 id="regTitle" style="margin-top:0;">Datos del Negocio</h2>
+    <form id="regForm" onsubmit="event.preventDefault(); saveProfile()">
+      <div class="grid">
+        <div><label for="bname">Razón Social</label><input id="bname" required placeholder="Ej: Almacén Don Pepe" /></div>
+        <div><label for="ruti">RUT</label><input id="ruti" required placeholder="12.345.678-9" /></div>
+      </div>
+      <label for="contact">Email de Contacto</label><input id="contact" type="email" />
+      <div style="margin-top:20px"><button class="btn" type="submit">Guardar Cambios</button></div>
+    </form>
+  </section>
+
+  <section id="reports" class="card" role="region" aria-labelledby="repTitle" hidden>
+    <h2 id="repTitle" style="margin-top:0;">Reportes de Venta</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="small">Historial Reciente</div>
+        <table id="txTable"><thead><tr><th>Fecha</th><th>Monto</th></tr></thead><tbody></tbody></table>
+      </div>
+      <div class="card">
+        <div class="small">Tendencia</div>
+        <svg id="barChart" width="100%" height="150" viewBox="0 0 300 150" style="background:#f9fafb; margin-top:10px;"></svg>
+      </div>
+    </div>
+  </section>
+
+  <section id="access" class="card" role="region" aria-labelledby="accTitle" hidden>
+    <h2 id="accTitle" style="margin-top:0;">Ayuda y Accesibilidad</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="tog"><input type="checkbox" id="bigText"> <label for="bigText" style="margin:0">Texto grande</label></div>
+        <div class="tog" style="margin-top:12px;"><input type="checkbox" id="highContrast"> <label for="highContrast" style="margin:0">Alto Contraste</label></div>
+      </div>
+      <div>
+        <strong>¿Cómo imprimo?</strong>
+        <div class="muted">Al presionar "Generar" o "Imprimir", se abrirá la ventana de impresión de tu navegador. Elige "Guardar como PDF".</div>
+      </div>
+    </div>
+
+    <div style="margin-top:30px; border-top:1px solid #eee; padding-top:20px; text-align:center;">
+        <p class="muted" style="margin-bottom:10px;">Zona de Privacidad (Demo)</p>
+        <button onclick="hardReset()" style="background:#ef4444; color:white; border:0; padding:10px 20px; border-radius:6px; cursor:pointer;">
+            🗑️ Borrar datos y Reiniciar App
+        </button>
+    </div>
+  </section>
+
+</main>
+
+<script>
+/* --- NAVEGACIÓN --- */
+const navButtons = document.querySelectorAll('nav button');
+navButtons.forEach(b=>b.addEventListener('click', ()=> show(b.dataset.target)));
+
+function show(id){
+  document.querySelectorAll('main section').forEach(s=> s.hidden = true);
+  document.getElementById(id).hidden = false;
+  navButtons.forEach(nb=> nb.classList.toggle('active', nb.dataset.target===id));
+  window.scrollTo(0,0);
+}
+
+/* --- QR DINÁMICO --- */
+document.addEventListener("DOMContentLoaded", function() {
+    const qrImage = document.getElementById('dynamicQR');
+    qrImage.src = `https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=${encodeURIComponent(window.location.href)}`;
+});
+
+/* --- LÓGICA PLANTILLAS --- */
+let currentTpl = '';
+function loadTemplate(type){
+  const editor = document.getElementById('template-editor');
+  const container = document.getElementById('tpl-inputs');
+  const title = document.getElementById('tpl-name');
+  editor.style.display = 'block';
+  currentTpl = type;
+  
+  let html = '';
+  if(type === 'recibo'){
+      title.textContent = 'Recibo de Dinero';
+      html = `
+        <div><label>Fecha</label><input type="date" id="t-date"></div>
+        <div><label>Monto ($)</label><input type="number" id="t-monto" placeholder="50000"></div>
+        <div style="grid-column:1/-1"><label>Recibí de</label><input id="t-from" placeholder="Nombre del pagador"></div>
+        <div style="grid-column:1/-1"><label>La suma de (palabras)</label><input id="t-words" placeholder="Cincuenta mil pesos..."></div>
+        <div style="grid-column:1/-1"><label>Concepto</label><input id="t-concept" placeholder="Pago de arriendo / Servicios..."></div>
+      `;
+  } else if(type === 'vale'){
+      title.textContent = 'Vale de Caja (Interno)';
+      html = `
+        <div><label>Fecha</label><input type="date" id="t-date"></div>
+        <div><label>Monto ($)</label><input type="number" id="t-monto"></div>
+        <div style="grid-column:1/-1"><label>Solicitante</label><input id="t-from" placeholder="Quién retira el dinero"></div>
+        <div style="grid-column:1/-1"><label>Motivo</label><input id="t-concept" placeholder="Compra de insumos, almuerzo..."></div>
+      `;
+  } else if(type === 'cotizacion'){
+      title.textContent = 'Cotización Simple';
+      html = `
+        <div><label>Fecha</label><input type="date" id="t-date"></div>
+        <div><label>Cliente</label><input id="t-from" placeholder="Nombre cliente"></div>
+        <div style="grid-column:1/-1"><label>Detalle del Trabajo/Producto</label><textarea rows="3" id="t-concept" placeholder="Descripción detallada..."></textarea></div>
+        <div><label>Total Estimado ($)</label><input type="number" id="t-monto"></div>
+        <div><label>Validez (días)</label><input value="15"></div>
+      `;
+  }
+  container.innerHTML = html;
+  document.getElementById('t-date').valueAsDate = new Date();
+  editor.scrollIntoView({behavior: "smooth"});
+}
+
+function printTemplate(){
+    const tDate = document.getElementById('t-date').value;
+    const tMonto = document.getElementById('t-monto').value;
+    const tFrom = document.getElementById('t-from').value || '__________';
+    const tConcept = document.getElementById('t-concept').value || '__________';
+    const w = window.open('', '_blank');
+    let content = '';
+    
+    if(currentTpl === 'recibo'){
+        const tWords = document.getElementById('t-words').value || '__________';
+        content = `<div style="border:2px solid #000; padding:30px; max-width:600px; margin:20px auto; font-family:Arial;"><h1 style="text-align:center; text-transform:uppercase;">Recibo de Dinero</h1><div style="text-align:right; margin-bottom:30px;">Fecha: ${tDate} <br> <strong>$ ${Number(tMonto).toLocaleString('es-CL')}</strong></div><p style="line-height:2.5;">Recibí de <strong>${tFrom}</strong> <br>la suma de <strong>${tWords}</strong> <br>Por concepto de: <strong>${tConcept}</strong></p><div style="margin-top:80px; text-align:right;">__________________________<br>Firma Recibe</div></div>`;
+    } else if(currentTpl === 'vale'){
+        content = `<div style="border:1px dashed #000; padding:20px; max-width:400px; margin:20px auto; font-family:Courier, monospace;"><h2 style="text-align:center;">VALE DE CAJA</h2><div style="display:flex; justify-content:space-between; margin-bottom:20px;"><span>${tDate}</span> <span>$ ${Number(tMonto).toLocaleString('es-CL')}</span></div><p><strong>Retira:</strong> ${tFrom}</p><p><strong>Motivo:</strong> ${tConcept}</p><div style="margin-top:60px; text-align:center;">__________________<br>Firma</div></div>`;
+    } else {
+        content = `<div style="max-width:700px; margin:30px auto; font-family:Arial;"><div style="border-bottom:2px solid #333; padding-bottom:10px; margin-bottom:20px;"><h1 style="margin:0;">COTIZACIÓN</h1><div style="color:#666;">Fecha: ${tDate}</div></div><p><strong>Cliente:</strong> ${tFrom}</p><div style="margin-top:30px; border:1px solid #ddd; padding:15px; min-height:100px;"><strong>Descripción:</strong><br><br> ${tConcept.replace(/\n/g,'<br>')}</div><div style="margin-top:20px; text-align:right; font-size:20px;"><strong>Total: $ ${Number(tMonto).toLocaleString('es-CL')}</strong></div><div style="margin-top:50px; font-size:12px; color:#666; text-align:center;">Documento informativo, no válido como factura.</div></div>`;
+    }
+    w.document.write(`<html><head><title>Imprimir</title></head><body>${content}</body></html>`);
+    w.document.close();
+    w.print();
+}
+
+/* --- LÓGICA GENERAL --- */
+function saveProfile(){
+  const name = document.getElementById('bname').value;
+  localStorage.setItem('demo_profile_name', name);
+  alert('Datos Guardados');
+}
+const savedName = localStorage.getItem('demo_profile_name');
+if(savedName) document.getElementById('bname').value = savedName;
+
+/* Facturación */
+let items = [];
+function addItem(){
+  const desc = document.getElementById('itemDesc').value;
+  const qty = document.getElementById('itemQty').value;
+  const price = document.getElementById('itemPrice').value;
+  if(desc && qty && price){
+     items.push({desc, qty, price});
+     renderItems();
+     document.getElementById('itemDesc').value='';
+     document.getElementById('itemDesc').focus();
+  }
+}
+function renderItems(){
+  const tbody = document.querySelector('#itemsTable tbody'); tbody.innerHTML='';
+  let total = 0;
+  items.forEach(it=>{
+    tbody.innerHTML += `<tr><td>${it.desc}</td><td>${it.qty}</td><td>$ ${(it.qty*it.price).toLocaleString('es-CL')}</td></tr>`;
+    total += it.qty*it.price;
+  });
+  document.getElementById('total').innerText = total.toLocaleString('es-CL');
+}
+function clearItems(){ items=[]; renderItems(); }
+function generateInvoice(){
+  if(items.length>0){
+      alert('Boleta Generada (Simulación)');
+      const txs = JSON.parse(localStorage.getItem('demo_txs')||'[]');
+      txs.unshift({date: new Date().toLocaleDateString(), total: parseInt(document.getElementById('total').innerText.replace(/\./g,''))});
+      localStorage.setItem('demo_txs', JSON.stringify(txs));
+      updateReports();
+      clearItems();
+  }
+}
+
+/* Reportes */
+function updateReports(){
+  const txs = JSON.parse(localStorage.getItem('demo_txs')||'[]');
+  const tbody = document.querySelector('#txTable tbody'); tbody.innerHTML='';
+  let totalToday = 0;
+  txs.slice(0,5).forEach(t=> tbody.innerHTML += `<tr><td>${t.date}</td><td>$ ${parseInt(t.total).toLocaleString('es-CL')}</td></tr>`);
+  txs.forEach(t=> totalToday += parseInt(t.total));
+  document.getElementById('todaySales').innerText = totalToday.toLocaleString('es-CL');
+  document.getElementById('invoicesCount').innerText = txs.length;
+  // Gráfico
+  const vals = txs.slice(0,7).map(t=>t.total).reverse();
+  const svg = document.getElementById('barChart'); svg.innerHTML='';
+  if(vals.length){
+      const max = Math.max(...vals);
+      vals.forEach((v,i)=>{
+          const h = (v/max)*130;
+          svg.innerHTML += `<rect x="${i*40+10}" y="${150-h}" width="30" height="${h}" fill="#3b82f6" rx="4"></rect>`;
+      });
+  }
+}
+updateReports();
+
+/* Accesibilidad & SEGURIDAD */
+document.getElementById('bigText').addEventListener('change', function(){ document.body.style.fontSize = this.checked ? '18px' : 'inherit'; });
+document.getElementById('highContrast').addEventListener('change', function(){ document.body.classList.toggle('high-contrast', this.checked); });
+
+// FUNCIÓN DE RESET DE DATOS (SEGURIDAD)
+function hardReset(){
+    if(confirm('¿Borrar todos los datos de prueba y reiniciar la aplicación?')){
+        localStorage.clear();
+        window.location.reload();
+    }
+}
+</script>
+</body>
+</html>

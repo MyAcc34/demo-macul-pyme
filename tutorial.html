@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Módulo de Capacitación — Facturación y Boletas Electrónicas (Chile)</title>
+
+  <style>
+    /* 1. Definición de Variables CSS (Custom Properties) */
+    :root {
+      --bg: #f7f8fb;
+      --card: #ffffff;
+      --accent: #0b63a5;
+      --muted: #6b7280;
+      --maxw: 1000px;
+      --radius: 12px;
+    }
+
+    /* 2. Estilos Globales y Corrección de Fuente */
+    /* Se movió font-family aquí para que se aplique correctamente al cuerpo del documento */
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: #1f2937;
+      font-family: "Arial", sans-serif;
+    }
+    
+    .wrap {
+      max-width: var(--maxw);
+      margin: 28px auto;
+      padding: 20px;
+    }
+
+    /* 3. Estilos de Encabezado (Header) */
+    header {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    
+    .brand {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    .logo {
+      width: 62px;
+      height: 62px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, #fff, #e6f0fb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    
+    .logo img {
+      max-width: 52px;
+      max-height: 52px;
+      object-fit: contain
+    }
+    
+    h1 {
+      font-size: 20px;
+      margin: 0
+    }
+    
+    p.lead {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+    
+    .small {
+      font-size: 12px;
+      color: var(--muted)
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+    }
+
+    /* 4. Grid Principal y Responsividad */
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 320px;
+      gap: 18px;
+      align-items: start;
+    }
+    
+    @media (max-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .aside {
+        order: 2
+      }
+    }
+
+    /* 5. Tarjeta (Card) y Secciones Principales */
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: 0 6px 18px rgba(15, 23, 42, 0.06);
+    }
+    
+    .hero {
+      display: flex;
+      gap: 18px;
+      align-items: center;
+    }
+    
+    .hero .screenshot {
+      flex: 1;
+      min-height: 160px;
+      border-radius: 10px;
+      background: linear-gradient(180deg, #f9fbff, #eef6ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px dashed rgba(11, 99, 165, 0.12);
+    }
+    
+    .hero .screenshot img {
+      max-width: 100%;
+      max-height: 220px;
+      border-radius: 8px
+    }
+    
+    .hero .meta {
+      width: 240px
+    }
+    
+    .section {
+      margin-top: 14px
+    }
+    
+    .section h2 {
+      font-size: 16px;
+      margin: 0 0 8px
+    }
+    
+    .kv {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+    
+    .chip {
+      background: #eef7ff;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-size: 13px;
+      color: var(--accent);
+      border: 1px solid rgba(11, 99, 165, 0.08);
+    }
+
+    /* 6. Características (Features) */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-top: 10px
+    }
+    
+    @media (max-width: 600px) {
+      .features {
+        grid-template-columns: 1fr
+      }
+    }
+    
+    .feature {
+      background: #fff;
+      border-radius: 8px;
+      padding: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+    
+    .feature h3 {
+      font-size: 14px;
+      margin: 0 0 6px
+    }
+    
+    .feature p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    /* 7. Aside (QR, contacto, métricas) */
+    .aside .qr {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .qr img {
+      width: 150px;
+      height: 150px;
+      border-radius: 8px;
+      background: #fff;
+      padding: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    
+    .metric {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #fbfeff;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      margin-top: 8px;
+    }
+    
+    .metric strong {
+      font-size: 16px
+    }
+
+    /* 8. Pie de Página (Footer) */
+    footer {
+      margin-top: 18px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+    }
+    
+    footer .note {
+      color: var(--muted);
+      font-size: 12px
+    }
+
+    /* 9. Estilos para Imprimir */
+    @media print {
+      body {
+        background: #fff
+      }
+      .wrap {
+        box-shadow: none;
+        margin: 0;
+        padding: 8mm
+      }
+      header, .btn, .aside {
+        display: none
+      } /* Se oculta el aside para impresión */
+      .card {
+        box-shadow: none;
+        border: 0;
+        padding: 0; /* Ajuste para impresión */
+      }
+      .grid {
+        grid-template-columns: 1fr;
+      }
+      .hero {
+        flex-direction: column; /* Apilado en impresión */
+        align-items: flex-start;
+      }
+      .hero .meta {
+        width: 100%;
+        margin-top: 10px;
+      }
+      .hero .screenshot {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+
+    <header>
+      <div class="brand">
+        <div class="logo" aria-hidden="true">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48'%3E%3Crect width='48' height='48' rx='8' fill='%230b63a5'/%3E%3Ctext x='50%25' y='55%25' font-size='22' font-family='Arial' fill='white' text-anchor='middle' dominant-baseline='middle'%3EF%3C/text%3E%3C/svg%3E" alt="Logo Módulo Facturación">
+        </div>
+        <div>
+          <h1>Facturación Simple para Pymes — Módulo Online Chile 🇨🇱</h1>
+          <p class="lead">Capacitación práctica: Manejo de Boleta Electrónica y Factura Electrónica (SII).</p>
+        </div>
+      </div>
+      <div style="margin-left:auto; text-align:right">
+        <div class="small">Versión demo • Fecha: <span id="fecha"></span></div>
+        <a class="btn" href="#" onclick="window.print();return false">Imprimir / Guardar PDF</a>
+      </div>
+    </header>
+
+    <div class="grid">
+      <main>
+        <div class="card">
+          <div class="hero">
+            <div class="screenshot" id="screenshot">
+              <img src="https://via.placeholder.com/700x300.png?text=M%C3%B3dulo+de+Capacitaci%C3%B3n+Boleta+Electr%C3%B3nica+y+Factura+%28Chile%29" alt="Pantalla principal del módulo de facturación">
+            </div>
+            <div class="meta">
+              <div class="kv">
+                <div class="chip">Normativa SII</div>
+                <div class="chip">Boleta y Factura</div>
+                <div class="chip">Pymes y Emprendedores</div>
+              </div>
+              <div class="section">
+                <h2>Objetivo del Módulo</h2>
+                <p class="small">Capacitar a pymes y emprendedores en la correcta emisión y gestión de documentos tributarios electrónicos (DTE), cumpliendo con la normativa vigente del **SII** en Chile.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Contenidos Clave del Curso</h2>
+            <div class="features">
+              <div class="feature">
+                <h3>1. Introducción al DTE</h3>
+                <p>¿Qué es la Boleta Electrónica y la Factura Electrónica? Obligatoriedad y plazos en Chile.</p>
+              </div>
+              <div class="feature">
+                <h3>2. Uso de la App del SII</h3>
+                <p>Guía práctica para emitir boletas desde el móvil o computador usando las plataformas gratuitas del SII.</p>
+              </div>
+              <div class="feature">
+                <h3>3. Factura para Clientes Empresa</h3>
+                <p>Diferencias clave entre Boleta y Factura. Manejo de IVA y la retención de impuestos (honorarios).</p>
+              </div>
+              <div class="feature">
+                <h3>4. Errores Comunes y Anulación</h3>
+                <p>Cómo corregir o anular documentos (Notas de Crédito/Débito) y evitar multas del SII.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="section">
+            <h2>Metodología y Recursos Adicionales</h2>
+            <ul style="margin:8px 0 0 18px;color:var(--muted);font-size:13px">
+              <li>**Video-cápsulas** de 5 a 10 minutos por tema.</li>
+              <li>**Simulador interactivo** (mock-up) para practicar la emisión de documentos.</li>
+              <li>**Glosario** de términos tributarios chilenos.</li>
+            </ul>
+          </div>
+        </div>
+
+        <footer>
+          <div class="note">Módulo de Capacitación — Preparado para Emprendedores Chile</div>
+          <div class="note">Proyecto financiado por [Institución/Municipalidad]</div>
+        </footer>
+      </main>
+
+      <aside class="aside">
+        <div class="card">
+          <div class="qr">
+            <div style="font-weight:600">Comenzar el Curso (QR)</div>
+            <img id="qrimg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://plataforma.capacitacion.cl/facturacion" alt="Código QR para acceder al curso">
+            <div class="small">Escanee para iniciar el módulo de capacitación en su dispositivo móvil.</div>
+          </div>
+
+          <div class="section">
+            <h2>Métricas de Impacto (Estimación)</h2>
+            <div class="metric"><span class="small">Pymes Certificadas (12m)</span><strong id="m1">0 → 400 (meta)</strong></div>
+            <div class="metric"><span class="small">Tasa de Completación</span><strong id="m2">65% (est.)</strong></div>
+            <div class="metric"><span class="small">Consultas SII Reducidas</span><strong id="m3">20% (objetivo)</strong></div>
+          </div>
+
+          <div class="section">
+            <h2>Soporte y Consultas</h2>
+            <p class="small">Equipo de Capacitación Pyme • soporte@plataforma.cl • +56 9 8xxx xxxx</p>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h2 style="font-size:14px;margin:0 0 8px">Recursos Visuales Sugeridos</h2>
+          <p class="small">Usar íconos que representen documentos, calculadora y el logo del SII. Paleta azul y blanco para un tono formal y de confianza.</p>
+          <div style="height:10px"></div>
+          <div style="display:flex;gap:8px">
+            <img src="https://via.placeholder.com/80x60.png?text=Boleta+Electr%C3%B3nica" alt="Boleta Electrónica" style="border-radius:6px;border:1px solid rgba(0,0,0,0.06)">
+            <img src="https://via.placeholder.com/80x60.png?text=Logo+SII" alt="Logo SII" style="border-radius:6px;border:1px solid rgba(0,0,0,0.06)">
+            <img src="https://via.placeholder.com/80x60.png?text=Video+Tutorial" alt="Video Tutorial" style="border-radius:6px;border:1px solid rgba(0,0,0,0.06)">
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script>
+    // Se insertan los scripts al final del <body> para no bloquear la carga visual.
+    
+    // Función para obtener y mostrar la fecha actual
+    document.getElementById('fecha').textContent = new Date().toLocaleDateString('es-CL');
+
+    // Generación dinámica del QR (aunque se usa una imagen estática por defecto en el HTML, el script la podría actualizar)
+    const qrData = encodeURIComponent('https://plataforma.capacitacion.cl/facturacion'); // URL del curso
+    const qrUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + qrData;
+    document.getElementById('qrimg').src = qrUrl;
+
+    // Valores de métricas demo (Se usan los valores con etiqueta de estado para la demostración)
+    document.getElementById('m1').textContent = '0 → 400 (meta)';
+    document.getElementById('m2').textContent = '65% (est.)';
+    document.getElementById('m3').textContent = '20% (objetivo)';
+  </script>
+</body>
+</html>

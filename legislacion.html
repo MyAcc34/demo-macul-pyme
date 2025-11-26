@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+
+<title>Normativa y Legislación Digital — Macul Digital</title>
+<style>
+  :root{
+    /* Variables corregidas para VS Code */
+    --bg:'f5f7fb'; 
+    --card:'ffffff'; 
+    --accent:'0066cc'; 
+    --text:'1f2937';
+    --header-bg: linear-gradient(90deg, #0066cc, #004499);
+  }
+  html,body{height:100%; margin:0; font-family:Arial,Helvetica,sans-serif; background:var(--bg); color:var(--text);}
+
+  /* HEADER */
+  header{background:var(--header-bg); padding:12px 16px; display:flex; align-items:center; justify-content:space-between; box-shadow:0 2px 10px rgba(0,0,0,.15); color: white; position:sticky; top:0; z-index:100;}
+  .logo{display:flex; align-items:center; gap:10px}
+  .logo .mark{width:36px; height:36px; background:white; color:var(--accent); border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:bold;}
+  .btn-back{background:rgba(255,255,255,0.2); color:white; text-decoration:none; padding:8px 12px; border-radius:6px; font-size:13px; display:flex; align-items:center; gap:6px; transition:0.2s;}
+  .btn-back:hover{background:rgba(255,255,255,0.3);}
+
+  /* CONTENIDO */
+  main{padding:20px; max-width:900px; margin:0 auto;}
+  h1{font-size:20px; color:#111; margin-bottom:6px;}
+  p.lead{color:#666; margin-top:0; font-size:14px; margin-bottom:24px;}
+
+  /* GRID DE TARJETAS */
+  .grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:16px;}
+  
+  .legal-card{
+      background:var(--card); padding:20px; border-radius:10px; 
+      border-left:5px solid var(--accent);
+      box-shadow:0 2px 5px rgba(0,0,0,0.05);
+      transition:transform 0.2s;
+  }
+  .legal-card:hover{transform:translateY(-3px); box-shadow:0 5px 15px rgba(0,0,0,0.1);}
+  
+  .legal-card h3{margin:0 0 8px; font-size:16px; color:#004499;}
+  .legal-card p{font-size:13px; color:#555; line-height:1.5;}
+  
+  /* Botón de enlace seguro */
+  .source{display:inline-block; margin-top:12px; font-size:12px; color:#0066cc; text-decoration:none; font-weight:600; border:1px solid #cce5ff; padding:4px 10px; border-radius:20px; background:#eff6ff;}
+  .source:hover{background:#0066cc; color:white;}
+
+  .section-title{margin-top:30px; margin-bottom:15px; font-size:15px; font-weight:bold; color:#444; border-bottom:1px solid #ddd; padding-bottom:5px; text-transform:uppercase; letter-spacing:0.5px;}
+
+  @media (max-width:600px){ header{flex-direction:row;} }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="mark" aria-hidden="true">M</div>
+    <div style="font-weight:700; font-size:16px; color:white;">Marco Legal</div>
+  </div>
+  <a href="index.html" class="btn-back">⬅ Volver al Panel</a>
+</header>
+
+<main>
+  <h1>Legislación Pyme y Digitalización</h1>
+  <p class="lead">Biblioteca de referencias oficiales para el cumplimiento normativo en Chile.</p>
+
+  <div class="section-title">Facturación y Tributación (SII)</div>
+  <div class="grid">
+    <div class="legal-card">
+      <h3>Ley 21.210: Modernización Tributaria</h3>
+      <p>Establece la obligatoriedad de la <strong>Boleta Electrónica</strong> de Ventas y Servicios para todos los contribuyentes, separando el IVA del monto total.</p>
+      <a href="https://www.bcn.cl/leychile/navegar?idNorma=1142642" target="_blank" rel="noopener noreferrer" class="source">🏛 Ver en Biblioteca BCN</a>
+    </div>
+
+    <div class="legal-card">
+        <h3>IVA a los Servicios Digitales</h3>
+        <p>Normativa que regula el impuesto al valor agregado en plataformas y servicios digitales, clave para el comercio electrónico.</p>
+        <a href="https://www.sii.cl/destacados/modernizacion/iva_servicios_digitales.html" target="_blank" rel="noopener noreferrer" class="source">🌐 Portal SII</a>
+    </div>
+  </div>
+
+  <div class="section-title">Gestión y Digitalización</div>
+  <div class="grid">
+    <div class="legal-card" style="border-left-color: #10b981;">
+      <h3>Ley 21.180: Transformación Digital del Estado</h3>
+      <p>Marco que obliga a la tramitación electrónica. Aunque enfocado en el Estado, define los estándares de interoperabilidad que deben seguir las Pymes.</p>
+      <a href="https://www.bcn.cl/leychile/navegar?idNorma=1138435" target="_blank" rel="noopener noreferrer" class="source">🏛 Ver en Biblioteca BCN</a>
+    </div>
+
+    <div class="legal-card" style="border-left-color: #10b981;">
+        <h3>Ley 19.799: Firma Electrónica</h3>
+        <p>Regula los documentos electrónicos y la firma digital, otorgándoles la misma validez legal que el papel. Fundamental para contratos online.</p>
+        <a href="https://www.bcn.cl/leychile/navegar?idNorma=196640" target="_blank" rel="noopener noreferrer" class="source">🏛 Ver en Biblioteca BCN</a>
+    </div>
+  </div>
+
+  <div class="section-title">Seguridad y Datos</div>
+  <div class="grid">
+    <div class="legal-card" style="border-left-color: #f59e0b;">
+      <h3>Ley 19.628: Protección de la Vida Privada</h3>
+      <p>Norma actual sobre el tratamiento de datos personales de clientes y usuarios. (Atención: Nueva Ley de Datos en trámite).</p>
+      <a href="https://www.bcn.cl/leychile/navegar?idNorma=141599" target="_blank" rel="noopener noreferrer" class="source">🔒 Ver Ley Actual</a>
+    </div>
+
+    <div class="legal-card" style="border-left-color: #f59e0b;">
+        <h3>Ley Pro-Consumidor (SERNAC)</h3>
+        <p>Establece el derecho a retracto en compras electrónicas y garantías legales que toda Pyme con e-commerce debe respetar.</p>
+        <a href="https://www.sernac.cl/portal/604/w3-propertyvalue-21057.html" target="_blank" rel="noopener noreferrer" class="source">🛒 Guía SERNAC</a>
+    </div>
+  </div>
+
+  <div style="margin-top:40px; background:#eff6ff; padding:15px; border-radius:8px; text-align:center; font-size:13px; color:#666;">
+    Este módulo es meramente informativo y referencia a fuentes oficiales del Estado de Chile.<br>
+    Última actualización de enlaces: Noviembre 2024.
+  </div>
+
+</main>
+</body>
+</html>
